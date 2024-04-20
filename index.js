@@ -19,9 +19,12 @@ function getComputerChoice(){
 }
 
 function playRound(playerSelection, computerSelection){
+
+    playerSelection = formatPlayerSelection(playerSelection);
+
+    let result = ""
     let playerNumber = getChoiceNumber(playerSelection);
     let computerNumber = getChoiceNumber(computerSelection);
-    let result = ""
     
     if (playerSelection === computerSelection) {
         result = "Tie!"
@@ -35,8 +38,6 @@ function playRound(playerSelection, computerSelection){
         result = `You Lose! ${computerSelection} beats ${playerSelection}`;
     }
 
-    console.log(playerSelection)
-    console.log(computerSelection)
     return result
 }
 
@@ -58,4 +59,8 @@ function getChoiceNumber(selection){
     return choice
 }
 
-console.log(playRound("Rock",getComputerChoice()))
+function formatPlayerSelection(selection){
+    return selection.at(0).toUpperCase() + selection.slice(1).toLowerCase();
+}
+
+console.log(playRound("RocK",getComputerChoice()))
