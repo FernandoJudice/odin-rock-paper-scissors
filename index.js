@@ -18,4 +18,44 @@ function getComputerChoice(){
     return choice
 }
 
-console.log(getComputerChoice())
+function playRound(playerSelection, computerSelection){
+    let playerNumber = getChoiceNumber(playerSelection);
+    let computerNumber = getChoiceNumber(computerSelection);
+    let result = ""
+    
+    if (playerSelection === computerSelection) {
+        result = "Tie!"
+    }
+
+    if (playerNumber - computerNumber === 1 || playerNumber - computerNumber === -2) {
+        result = `You Win! ${playerSelection} beats ${computerSelection}`;
+    }
+
+    if (playerNumber - computerNumber === -1 || playerNumber - computerNumber === 2) {
+        result = `You Lose! ${computerSelection} beats ${playerSelection}`;
+    }
+
+    console.log(playerSelection)
+    console.log(computerSelection)
+    return result
+}
+
+function getChoiceNumber(selection){
+    switch (selection){
+        case "Rock":
+            choice = 0;
+            break;
+        case "Paper":
+            choice = 1;
+            break;
+        case "Scissors":
+            choice = 2;
+            break;
+        default:
+            console.log("Invalid selection");
+            break;
+    }
+    return choice
+}
+
+console.log(playRound("Rock",getComputerChoice()))
