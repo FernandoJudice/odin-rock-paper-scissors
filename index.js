@@ -22,22 +22,23 @@ function playRound(playerSelection, computerSelection){
 
     playerSelection = formatPlayerSelection(playerSelection);
 
-    let result = ""
+    let result;
     let playerNumber = getChoiceNumber(playerSelection);
     let computerNumber = getChoiceNumber(computerSelection);
     
     if (playerSelection === computerSelection) {
-        result = "Tie!"
+        result = 0
     }
 
     if (playerNumber - computerNumber === 1 || playerNumber - computerNumber === -2) {
-        result = `You Win! ${playerSelection} beats ${computerSelection}`;
+        result = 1
     }
 
     if (playerNumber - computerNumber === -1 || playerNumber - computerNumber === 2) {
-        result = `You Lose! ${computerSelection} beats ${playerSelection}`;
+        result = -1;
     }
 
+    showRoundResult(result,playerSelection,computerSelection);
     return result
 }
 
@@ -63,4 +64,47 @@ function formatPlayerSelection(selection){
     return selection.at(0).toUpperCase() + selection.slice(1).toLowerCase();
 }
 
-console.log(playRound("RocK",getComputerChoice()))
+function showRoundResult(roundResult,playerSelection,computerSelection){
+    switch(roundResult) {
+        case -1:
+            console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+            break;
+        case 0:
+            console.log("Tie!");
+            break;
+        case 1:
+            console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+            break;
+        default:
+            console.log(`invalid match result`)
+    }
+}
+
+function playGame(){
+    let playerScore = 0;
+    let computerScore = 0;
+    let currentRound;
+    for(i=0;i<5;i++){
+        currentRound = playRound(prompt(),getComputerChoice()) 
+        if (currentRound > 0) {
+            playerScore++;
+        }
+        if (currentRound <0) {
+            computerScore++;
+        }
+
+        console.log(`Player: ${playerScore} Computer: ${computerScore}`)
+    }
+    if (playerScore == computerScore) {
+        console.log("Tie!")
+    }
+    else if (playerScore > computerScore) {
+        console.log("You Win! :)")
+    }
+    else {
+        console.log("You Lose! :(")
+    }
+
+}
+
+playGame()
