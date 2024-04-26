@@ -1,10 +1,12 @@
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
+const result = document.querySelector(".result");
 
 rockButton.addEventListener("click",() => playRound("rock",getComputerChoice()));
 paperButton.addEventListener("click",() => playRound("paper",getComputerChoice()));
 scissorsButton.addEventListener("click",() => playRound("scissors",getComputerChoice()));
+
 
 
 function getComputerChoice(){
@@ -76,16 +78,16 @@ function formatPlayerSelection(selection){
 function showRoundResult(roundResult,playerSelection,computerSelection){
     switch(roundResult) {
         case -1:
-            console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
+            result.textContent = (`You Lose! ${computerSelection} beats ${playerSelection}`);
             break;
         case 0:
-            console.log("Tie!");
+            result.textContent = ("Tie!");
             break;
         case 1:
-            console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
+            result.textContent = (`You Win! ${playerSelection} beats ${computerSelection}`);
             break;
         default:
-            console.log(`invalid match result`)
+            result.textContent = (`invalid match result`)
     }
 }
 
