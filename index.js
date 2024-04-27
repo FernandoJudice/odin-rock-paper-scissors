@@ -1,13 +1,18 @@
 const rockButton = document.querySelector(".rock");
 const paperButton = document.querySelector(".paper");
 const scissorsButton = document.querySelector(".scissors");
-const result = document.querySelector(".result");
+const resultField = document.querySelector(".result");
 
 rockButton.addEventListener("click",() => playRound("rock",getComputerChoice()));
 paperButton.addEventListener("click",() => playRound("paper",getComputerChoice()));
 scissorsButton.addEventListener("click",() => playRound("scissors",getComputerChoice()));
 
+resultField.style.whiteSpace = "pre-line";
 
+let playerScore = 0;
+let computerScore = 0;
+
+newGame();
 
 function getComputerChoice(){
     let randomNumber = Math.floor(Math.random()*10)%3;
@@ -49,7 +54,10 @@ function playRound(playerSelection, computerSelection){
         result = -1;
     }
 
+    updateScore(result);
     showRoundResult(result,playerSelection,computerSelection);
+    showTotalScore();
+    checkGame();
     return result
 }
 
@@ -78,22 +86,54 @@ function formatPlayerSelection(selection){
 function showRoundResult(roundResult,playerSelection,computerSelection){
     switch(roundResult) {
         case -1:
-            result.textContent = (`You Lose! ${computerSelection} beats ${playerSelection}`);
+            resultField.textContent = (`You Lose! ${computerSelection} beats ${playerSelection}`);
             break;
         case 0:
-            result.textContent = ("Tie!");
+            resultField.textContent = ("Tie!");
             break;
         case 1:
-            result.textContent = (`You Win! ${playerSelection} beats ${computerSelection}`);
+            resultField.textContent = (`You Win! ${playerSelection} beats ${computerSelection}`);
             break;
         default:
-            result.textContent = (`invalid match result`)
+            resultField.textContent = (`invalid match result`)
+    }
+}
+
+function newGame(){
+    playerScore = 0;
+    computerScore = 0;
+}
+
+function updateScore(roundResult){
+    switch(roundResult) {
+        case -1:
+            computerScore++;
+            break;
+        case 1:
+            playerScore++;
+            break;
+        default:
+            break;
+    }
+}
+
+function showTotalScore(){
+    resultField.textContent += `\r\nCurrent Score is You: ${playerScore} vs Computer: ${computerScore}`;
+}
+
+function checkGame(){
+    if(playerScore === 5){
+        resultField.textContent += `\nYou Win! :)`;
+        newGame();
+    }
+
+    if(computerScore === 5){
+        resultField.textContent += `\nYou Lose! :(`;
+        newGame();
     }
 }
 
 function playGame(){
-    let playerScore = 0;
-    let computerScore = 0;
     let currentRound;
     for(i=0;i<5;i++){
         currentRound = playRound(prompt(),getComputerChoice()) 
@@ -103,7 +143,7 @@ function playGame(){
         if (currentRound <0) {
             computerScore++;
         }
-
+        
         console.log(`Player: ${playerScore} Computer: ${computerScore}`)
     }
     if (playerScore == computerScore) {
@@ -115,7 +155,5 @@ function playGame(){
     else {
         console.log("You Lose! :(")
     }
-
+    
 }
-
-// playGame()
